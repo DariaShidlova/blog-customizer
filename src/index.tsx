@@ -3,10 +3,7 @@ import { StrictMode, CSSProperties, useState } from 'react';
 import clsx from 'clsx';
 import { Article } from './components/article/Article';
 import { ArticleParamsForm } from './components/article-params-form/ArticleParamsForm';
-import {
-	defaultArticleState,
-	ArticleStateType,
-} from './constants/articleProps';
+import { defaultArticleState } from './constants/articleProps';
 import './styles/index.scss';
 import styles from './styles/index.module.scss';
 
@@ -15,17 +12,6 @@ const root = createRoot(domNode);
 
 const App = () => {
 	const [currentSettings, setCurrentSettings] = useState(defaultArticleState); //текущие примененные настройки
-	const [isSidebarOpen, setIsSidebarOpen] = useState(false); //состояние видимости сайтбара
-
-	const handleApply = (newSettings: ArticleStateType) => {
-		setCurrentSettings(newSettings); //сохранение новых настроек
-		setIsSidebarOpen(false); //закрытие сайтбара
-	};
-
-	const handleReset = () => {
-		setCurrentSettings(defaultArticleState); //сброс к первоначальному состоянию
-		setIsSidebarOpen(false);
-	};
 
 	return (
 		<main
@@ -40,12 +26,8 @@ const App = () => {
 				} as CSSProperties
 			}>
 			<ArticleParamsForm
-				isOpen={isSidebarOpen} //текущее состояние
-				onClose={() => setIsSidebarOpen(false)} //закрытие
-				onApply={handleApply} //подтверждение изменений
-				onReset={handleReset} //сброс настроек
-				currentSettings={currentSettings} //актуальные настройки
-				onChange={(newState) => setIsSidebarOpen(newState)} //изменение состояния
+				setArticleSettings={setCurrentSettings}
+				defaultSettings={defaultArticleState}
 			/>
 			<Article />
 		</main>
