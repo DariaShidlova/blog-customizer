@@ -12,6 +12,7 @@ import {
 	backgroundColors,
 	contentWidthArr,
 	fontSizeOptions,
+	defaultArticleState,
 } from 'src/constants/articleProps';
 import { useOutsideClickClose } from '../../ui/select/hooks/useOutsideClickClose';
 import styles from './ArticleParamsForm.module.scss';
@@ -19,16 +20,16 @@ import { RadioGroup } from 'src/ui/radio-group';
 
 type ArticleParamsFormProps = {
 	setArticleSettings: React.Dispatch<React.SetStateAction<ArticleStateType>>;
-	defaultSettings: ArticleStateType;
+	currentSettings: ArticleStateType;
 };
 
 export const ArticleParamsForm = ({
 	setArticleSettings,
-	defaultSettings,
+	currentSettings,
 }: ArticleParamsFormProps) => {
 	const [isOpen, setIsOpen] = useState(false);
 	// Локальное состояние для состояния формы
-	const [formState, setFormState] = useState(defaultSettings);
+	const [formState, setFormState] = useState(currentSettings);
 	// Реф для сайдбара
 	const sidebarRef = useRef<HTMLDivElement>(null);
 
@@ -61,18 +62,11 @@ export const ArticleParamsForm = ({
 
 	// Сброс формы
 	const handleFormReset = () => {
-		setArticleSettings(defaultSettings);
-		setFormState(defaultSettings);
+		setArticleSettings(defaultArticleState);
+		setFormState(currentSettings);
 	};
 
-	// Обработчик клика по кнопке-стрелке
-	const handleToggleOpen = () => {
-		const newIsOpen = !isOpen;
-		if (newIsOpen) {
-			setFormState(defaultSettings);
-		}
-		setIsOpen(newIsOpen);
-	};
+	const handleToggleOpen = () => setIsOpen((prevState) => !prevState);
 
 	return (
 		<>

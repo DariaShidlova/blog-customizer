@@ -27,7 +27,7 @@ const App = () => {
 			}>
 			<ArticleParamsForm
 				setArticleSettings={setCurrentSettings}
-				defaultSettings={defaultArticleState}
+				currentSettings={currentSettings}
 			/>
 			<Article />
 		</main>
